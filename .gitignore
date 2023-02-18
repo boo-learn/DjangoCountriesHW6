@@ -1,1 +1,6 @@
-countries_venv/*
+key
+key.pub
+.idea/
+*venv/
+*.pyc
+db.*
