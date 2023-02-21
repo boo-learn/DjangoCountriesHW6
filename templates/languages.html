@@ -9,7 +9,7 @@
 <ol>
     {% for language in languages %}
     <li>
-        <a>{{ language }}</a>
+        <a href="/language/{{ language.name }}">{{ language.name }}</a>
     </li>
     {% endfor %}
 </ol>

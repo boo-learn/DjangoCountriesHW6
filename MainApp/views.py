@@ -1,16 +1,7 @@
 from django.shortcuts import render, HttpResponse
 from django.http import HttpResponseNotFound
-from MainApp.models import Country
+from MainApp.models import Country, Language
 from django.core.exceptions import ObjectDoesNotExist
-
-countries = Country.objects.all()
-lang_set = set()
-
-for country in countries:
-    for language in country.languages.split():
-        lang_set.add(language)
-
-lang_lst = sorted(list(lang_set))
 
 def home(request):
     context = {
@@ -39,6 +30,18 @@ def get_country(request, country_name):
 
 def get_languages(request):
     context = {
-        'languages': lang_lst
+        'languages': Language.objects.all()
     }
     return render(request, 'languages.html', context)
+
+def get_language(request, language_name):
+    try:
+        language = Language.objects.get(name=language_name)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound(f"Language: {language_name} not found.")
+    countries2 = Country.objects.filter(language__name=language_name)
+    context = {
+        'language': language,
+        'countries': countries2
+    }
+    return render(request, 'language_info.html', context)

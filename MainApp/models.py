@@ -14,4 +14,4 @@ class Country(models.Model):
     language = models.ManyToManyField(to=Language)
 
     def __repr__(self):
-        return f"country: {self.name} | {self.language}"
+        return self.name
