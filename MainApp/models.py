@@ -9,6 +9,7 @@ class Language(models.Model):
 
 
 class Country(models.Model):
+    # TODO: мы на занятии обсудили, что хранить языки в виде строки - очень плохая идея
     name = models.CharField(max_length=100)
     languages = models.TextField(max_length=1000)
     language = models.ManyToManyField(to=Language)

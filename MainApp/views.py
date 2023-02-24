@@ -33,11 +33,13 @@ def get_country(request, country_name):
     return render(request, 'country_info.html', context)
 
 def get_languages(request):
+    # TODO: в вашей фикстуре, нет ни единого языка. Таблица с языками в БД пустая
     context = {
         'languages': Language.objects.all()
     }
     return render(request, 'languages.html', context)
 
+# TODO: эта функция обработчик нигде не используется. Зачем она?
 def get_language(request, language_name):
     try:
         language = Language.objects.get(name=language_name)
