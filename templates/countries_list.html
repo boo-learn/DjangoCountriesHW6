@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+{% extends 'base.html' %}
+{% block style %}
     <style>
-    ul.hr li {
-    display: inline;
-    }
+        ul.hr li {
+            display: inline-block;
+        }
     </style>
-</head>
-<body>
+{% endblock %}
+{% block content %}
 {% include 'inc-header.html' %}
 <h2>Список стран:</h2>
 <ol>
     {% for country in page_obj %}
     <li>
-        <a href="/country/{{ country.name }}">{{ country.name }}</a>
+        <a href="{% url 'country' country.name %}">{{ country.name }}</a>
     </li>
     {% endfor %}
 </ol>
@@ -36,5 +33,4 @@
         {% endif %}
     </span>
 </div>
-</body>
-</html>
+{% endblock %}

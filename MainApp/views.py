@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.http import HttpResponseNotFound
 from MainApp.models import Country, Language
 from django.core.exceptions import ObjectDoesNotExist
@@ -28,13 +28,17 @@ def get_country(request, country_name):
         return HttpResponseNotFound(f"Country with name: {country_name} not found")
     context = {
         'country': country,
-        'country_languages': country.languages.split()
+        'country_languages': country.language.all
     }
     return render(request, 'country_info.html', context)
 
 def get_languages(request):
+    languages = Language.objects.all()
+    paginator = Paginator(languages, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'languages': Language.objects.all()
+        'page_obj': page_obj
     }
     return render(request, 'languages.html', context)
 
@@ -50,11 +54,14 @@ def get_language(request, language_name):
     }
     return render(request, 'language_info.html', context)
 
-def the_same_fletter_countries(request, letter):
+def same_fletter_countries(request, letter):
     countries = Country.objects.filter(name__startswith=f"{letter}")
     if not countries:
         return HttpResponseNotFound(f"There are no countries that start with the letter: {letter}.")
+    paginator = Paginator(countries, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'countries': countries
+        'page_obj': page_obj
     }
     return render(request, 'countries_list.html', context)

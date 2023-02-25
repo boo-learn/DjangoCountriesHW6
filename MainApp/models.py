@@ -10,7 +10,6 @@ class Language(models.Model):
 
 class Country(models.Model):
     name = models.CharField(max_length=100)
-    languages = models.TextField(max_length=1000)
     language = models.ManyToManyField(to=Language)
 
     def __repr__(self):
